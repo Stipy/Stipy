@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-2 col-md-offset-5">
+                    <div>Загрузите фотографию</div>
+                    <input id="upload-button" type="file" accept="image/*" data-show-preview="false" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-2 col-md-offset-5"> 
+                    <div>
+                        <span>Сообщение</span>
+                    </div>
+                    <textarea rows="4"></textarea>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-2 col-md-offset-5">
+                <input type="button" value="Отправить" class="btn btn-danger" />
+            </div>
+        </div>
+        <script>
+            $(document).ready(function(){
+                //                $("#upload-button").fileinput({showCaption: false});
+            });
+
+        </script>
+    </body>
+</html>
