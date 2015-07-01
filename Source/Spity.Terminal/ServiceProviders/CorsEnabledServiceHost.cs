@@ -11,16 +11,12 @@ namespace Spity.Terminal.ServiceProviders
 {
     public sealed class CorsEnabledServiceHost<T> : ServiceHost
     {
-        private readonly Type contractType;
+        private readonly Type _contractType;
 
-        /// <summary>
-        ///     Конструктор.
-        /// </summary>
-        /// <param name="baseAddresses">BaseAddresses.</param>
         public CorsEnabledServiceHost(string baseAddresses)
             : base(typeof(T), new[] { new Uri(baseAddresses) })
         {
-            contractType = GetContractType(typeof(T));
+            _contractType = GetContractType(typeof(T));
             ConfigureEndpoint();
         }
 
@@ -58,13 +54,13 @@ namespace Spity.Terminal.ServiceProviders
                 case 0:
                     throw new InvalidOperationException(
                         "Service type " + serviceType.FullName
-                            + " does not implement any interface decorated with the ServiceContractAttribute.");
+                        + " does not implement any interface decorated with the ServiceContractAttribute.");
                 case 1:
                     return possibleContractTypes[0];
                 default:
                     throw new InvalidOperationException(
                         "Service type " + serviceType.FullName
-                            + " implements multiple interfaces decorated with the ServiceContractAttribute, not supported by this factory.");
+                        + " implements multiple interfaces decorated with the ServiceContractAttribute, not supported by this factory.");
             }
         }
 
@@ -140,7 +136,7 @@ namespace Spity.Terminal.ServiceProviders
                                                                        .Where(
                                                                            x =>
                                                                                x.Behaviors.Find<CorsEnabledAttribute>()
-                                                                                   != null)
+                                                                               != null)
                                                                        .ToList();
             var uriTemplates = new Dictionary<string, PreflightOperationBehavior>(StringComparer.OrdinalIgnoreCase);
 
@@ -177,11 +173,10 @@ namespace Spity.Terminal.ServiceProviders
 
         private void ConfigureEndpoint()
         {
-            ServiceEndpoint endpoint = AddServiceEndpoint(contractType, new WebHttpBinding(), string.Empty);
+            ServiceEndpoint endpoint = AddServiceEndpoint(_contractType, new WebHttpBinding(), string.Empty);
             RegisterPreflightOperations(endpoint);
             endpoint.Behaviors.Add(new WebHttpBehavior());
             endpoint.Behaviors.Add(new EnableCorsEndpointBehavior());
         }
     }
-
 }

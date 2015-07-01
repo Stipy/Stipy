@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using NLog;

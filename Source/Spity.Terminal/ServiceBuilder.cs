@@ -16,27 +16,27 @@ namespace Spity.Terminal
 {
     public sealed class ServiceBuilder : IDisposable
     {
-        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-        private bool disposed;
-        private CorsEnabledServiceHost<ServiceProvider> serviceProvider;
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private bool _disposed;
+        private CorsEnabledServiceHost<ServiceProvider> _serviceProvider;
+
+        public void BuildApplication()
+        {
+            _logger.Debug("Starting...");
+            RegisterService();
+            OpenCommunicationServices();
+            _logger.Info("Spity is running. Press <Esc> or <Enter> to stop.");
+        }
 
         public void Dispose()
         {
-            if (disposed)
+            if (_disposed)
             {
                 return;
             }
 
-            serviceProvider.Close();
-            disposed = true;
-        }
-
-        public void BuildApplication()
-        {
-            logger.Debug("Starting...");
-            RegisterService();
-            OpenCommunicationServices();
-            logger.Info("Spity is running. Press <Esc> or <Enter> to stop.");
+            _serviceProvider.Close();
+            _disposed = true;
         }
 
         private static string ServiceHostToString(ServiceHost host)
@@ -53,7 +53,7 @@ namespace Spity.Terminal
 
         private static void ServiceProviderFaulted(object sender, EventArgs e)
         {
-            logger.Warn("Spity Service failed");
+            _logger.Warn("Spity Service failed");
         }
 
         private void Bind<TRequest, TProcessor>(IConfiguration configuration)
@@ -66,11 +66,11 @@ namespace Spity.Terminal
 
         private void OpenCommunicationServices()
         {
-            serviceProvider = new CorsEnabledServiceHost<ServiceProvider>(Settings.Default.ServiceAddress);
-            serviceProvider.Description.Endpoints.Select(x=>x.Binding as WebHttpBinding).Iter(x=>x.MaxReceivedMessageSize = 2000000000);
-            serviceProvider.Faulted += ServiceProviderFaulted;
-            serviceProvider.Open();
-            logger.Info("{0} has been started", ServiceHostToString(serviceProvider));
+            _serviceProvider = new CorsEnabledServiceHost<ServiceProvider>(Settings.Default.ServiceAddress);
+            _serviceProvider.Description.Endpoints.Select(x => x.Binding as WebHttpBinding).Iter(x => x.MaxReceivedMessageSize = 2000000000);
+            _serviceProvider.Faulted += ServiceProviderFaulted;
+            _serviceProvider.Open();
+            _logger.Info("{0} has been started", ServiceHostToString(_serviceProvider));
         }
 
         private void RegisterService()
