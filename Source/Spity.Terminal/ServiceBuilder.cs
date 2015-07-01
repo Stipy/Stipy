@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ServiceModel;
 using System.ServiceModel.Description;
-using System.ServiceModel.Web;
 using System.Text;
 using Nelibur.ServiceModel.Services;
 using Nelibur.ServiceModel.Services.Operations;
@@ -18,14 +17,8 @@ namespace Spity.Terminal
     public sealed class ServiceBuilder : IDisposable
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-        private readonly IKernel kernel;
         private bool disposed;
         private CorsEnabledServiceHost<ServiceProvider> serviceProvider;
-
-        public ServiceBuilder()
-        {
-            kernel = new StandardKernel(new ApplicationDependencyModule());
-        }
 
         public void BuildApplication()
         {
@@ -67,7 +60,7 @@ namespace Spity.Terminal
             where TRequest : class
             where TProcessor : IRequestOperation
         {
-            Func<TProcessor> processorFactory = () => kernel.Get<TProcessor>();
+            Func<TProcessor> processorFactory = () => ServiceContainer.Container.Get<TProcessor>();
             configuration.Bind<TRequest, TProcessor>(processorFactory);
         }
 

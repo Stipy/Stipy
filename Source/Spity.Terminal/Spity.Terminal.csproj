@@ -52,6 +52,10 @@
       <HintPath>..\..\packages\Nelibur.Sword.3.1.6\lib\net45\Nelibur.Sword.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
       <Private>True</Private>
@@ -62,6 +66,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -83,6 +88,7 @@
     <Compile Include="Repositories\Entities\FeedbackEntity.cs" />
     <Compile Include="Repositories\FeedbackRepository.cs" />
     <Compile Include="ServiceBuilder.cs" />
+    <Compile Include="ServiceContainer.cs" />
     <Compile Include="ServiceProviders\Commands\SaveFeedbackCommand.cs" />
     <Compile Include="ServiceProviders\CorsEnabledServiceHost.cs" />
     <Compile Include="ServiceProviders\Cors\CorsConstants.cs" />
@@ -112,6 +118,9 @@
       <Project>{A1E80588-1ED8-4D9B-A600-2EB4831BD4F6}</Project>
       <Name>Spity.Contracts</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
