@@ -31,5 +31,14 @@ namespace Spity.Terminal.Properties {
                 return ((string)(this["MongoDbConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:8090/spity")]
+        public string ServiceAddress {
+            get {
+                return ((string)(this["ServiceAddress"]));
+            }
+        }
     }
 }

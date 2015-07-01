@@ -3,53 +3,22 @@ using System.Net;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Web;
-using Nelibur.ServiceModel.Contracts;
 using Nelibur.ServiceModel.Services;
 using NLog;
 
 namespace Spity.Terminal.ServiceProviders
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerCall)]
-    public class ServiceProvider : IJsonService
+    public class ServiceProvider : IServiceProvider
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
-
-        public Message Delete(Message message)
-        {
-            return Process(() => NeliburRestService.Process(message));
-        }
-
-        public void DeleteOneWay(Message message)
-        {
-            Process(() => NeliburRestService.ProcessOneWay(message));
-        }
 
         public Message Get(Message message)
         {
             return Process(() => NeliburRestService.Process(message));
         }
 
-        public void GetOneWay(Message message)
-        {
-            Process(() => NeliburRestService.ProcessOneWay(message));
-        }
-
-        public Message Post(Message message)
-        {
-            return Process(() => NeliburRestService.Process(message));
-        }
-
         public void PostOneWay(Message message)
-        {
-            Process(() => NeliburRestService.ProcessOneWay(message));
-        }
-
-        public Message Put(Message message)
-        {
-            return Process(() => NeliburRestService.Process(message));
-        }
-
-        public void PutOneWay(Message message)
         {
             Process(() => NeliburRestService.ProcessOneWay(message));
         }

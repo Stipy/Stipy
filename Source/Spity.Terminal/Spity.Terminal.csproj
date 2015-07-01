@@ -84,6 +84,16 @@
     <Compile Include="Repositories\FeedbackRepository.cs" />
     <Compile Include="ServiceBuilder.cs" />
     <Compile Include="ServiceProviders\Commands\SaveFeedbackCommand.cs" />
+    <Compile Include="ServiceProviders\CorsEnabledServiceHost.cs" />
+    <Compile Include="ServiceProviders\Cors\CorsConstants.cs" />
+    <Compile Include="ServiceProviders\Cors\CorsCorrelationState.cs" />
+    <Compile Include="ServiceProviders\Cors\CorsEnabledAttribute.cs" />
+    <Compile Include="ServiceProviders\Cors\CorsEnabledMessageInspector.cs" />
+    <Compile Include="ServiceProviders\Cors\CorsEnabledServiceHost.cs" />
+    <Compile Include="ServiceProviders\Cors\EnableCorsEndpointBehavior.cs" />
+    <Compile Include="ServiceProviders\Cors\PreflightOperationBehavior.cs" />
+    <Compile Include="ServiceProviders\Cors\PreflightOperationInvoker.cs" />
+    <Compile Include="ServiceProviders\IServiceProvider.cs" />
     <Compile Include="ServiceProviders\ServiceProvider.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -9,6 +9,7 @@ using Ninject;
 using NLog;
 using Spity.Contracts;
 using Spity.Terminal.Dependencies;
+using Spity.Terminal.Properties;
 using Spity.Terminal.ServiceProviders;
 using Spity.Terminal.ServiceProviders.Commands;
 
@@ -19,7 +20,7 @@ namespace Spity.Terminal
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
         private readonly IKernel kernel;
         private bool disposed;
-        private WebServiceHost serviceProvider;
+        private CorsEnabledServiceHost<ServiceProvider> serviceProvider;
 
         public ServiceBuilder()
         {
@@ -72,7 +73,7 @@ namespace Spity.Terminal
 
         private void OpenCommunicationServices()
         {
-            serviceProvider = new WebServiceHost(typeof(ServiceProvider));
+            serviceProvider = new CorsEnabledServiceHost<ServiceProvider>(Settings.Default.ServiceAddress);
             serviceProvider.Faulted += ServiceProviderFaulted;
             serviceProvider.Open();
             logger.Info("{0} has been started", ServiceHostToString(serviceProvider));
