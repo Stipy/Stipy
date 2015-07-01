@@ -29,8 +29,21 @@ namespace Spity.Terminal.ServiceProviders
 
         public void PostOneWay(Message message)
         {
-            string content = GetMessageContent(message);
-            ProcessRequest(content);
+            try
+            {
+                string content = GetMessageContent(message);
+                ProcessRequest(content);
+            }
+            catch (ArgumentException ex)
+            {
+                _logger.Error(ex);
+                throw new WebFaultException(HttpStatusCode.BadRequest);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex);
+                throw new WebFaultException(HttpStatusCode.InternalServerError);
+            }
         }
 
         private static TResult Process<TResult>(Func<TResult> action)

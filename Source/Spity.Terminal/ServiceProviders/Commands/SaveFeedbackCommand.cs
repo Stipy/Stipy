@@ -3,6 +3,7 @@ using Nelibur.ServiceModel.Services.Operations;
 using Nelibur.Sword.Extensions;
 using Spity.Contracts;
 using Spity.Terminal.Repositories;
+using Spity.Terminal.Repositories.Entities;
 
 namespace Spity.Terminal.ServiceProviders.Commands
 {
@@ -20,8 +21,26 @@ namespace Spity.Terminal.ServiceProviders.Commands
         {
             request.ToOption()
                    .Where(Validate)
+                   .Map(x => Convert(x))
                    .Do(x => _repository.Save(x))
                    .ThrowOnEmpty<ArgumentException>();
+        }
+
+        private FeedbackEntity Convert(FeedbackObject request)
+        {
+            var result = new FeedbackEntity
+            {
+                Text = request.Text
+            };
+            if (string.IsNullOrWhiteSpace(request.Image))
+            {
+                return result;
+            }
+            string searchString = "base64,";
+            var endIndex = request.Image.IndexOf(searchString, 0, StringComparison.OrdinalIgnoreCase);
+            var image = request.Image.Remove(0, endIndex + searchString.Length);
+            result.Image = System.Convert.FromBase64String(image);
+            return result;
         }
 
         private bool Validate(FeedbackObject request)
@@ -30,7 +49,7 @@ namespace Spity.Terminal.ServiceProviders.Commands
             {
                 return false;
             }
-            if (string.IsNullOrWhiteSpace(request.Text) && request.Image == null)
+            if (string.IsNullOrWhiteSpace(request.Text) && string.IsNullOrWhiteSpace(request.Image))
             {
                 return false;
             }

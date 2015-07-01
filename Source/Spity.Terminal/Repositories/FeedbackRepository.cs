@@ -1,7 +1,8 @@
 ﻿using System;
+using System.IO;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using Spity.Contracts;
+using NLog;
 using Spity.Terminal.Repositories.Entities;
 
 namespace Spity.Terminal.Repositories
@@ -9,6 +10,7 @@ namespace Spity.Terminal.Repositories
     public sealed class FeedbackRepository
     {
         private const string FeedbackName = "Feedback";
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private readonly ConnectionFactory _connectionFactory;
 
         public FeedbackRepository(ConnectionFactory connectionFactory)
@@ -16,18 +18,16 @@ namespace Spity.Terminal.Repositories
             _connectionFactory = connectionFactory;
         }
 
-        public void Save(FeedbackObject request)
+        public void Save(FeedbackEntity entity)
         {
-            var entity = new FeedbackEntity
-            {
-                Id = ObjectId.GenerateNewId(),
-                Text = request.Text,
-                Image = request.Image
-            };
+            entity.Id = ObjectId.GenerateNewId();
+            _logger.Debug("-> Save {0}", entity.Id);
 
             OpenConnection()
                 .GetCollection<FeedbackEntity>(FeedbackName)
                 .InsertOneAsync(entity).Wait();
+
+            _logger.Debug("<- Save {0}", entity.Id);
         }
 
         private IMongoDatabase OpenConnection()

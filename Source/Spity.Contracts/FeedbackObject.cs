@@ -7,7 +7,7 @@ namespace Spity.Contracts
     public sealed class FeedbackObject
     {
         [DataMember]
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
 
         [DataMember]
         public string Text { get; set; }
