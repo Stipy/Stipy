@@ -7,36 +7,126 @@
 
         <!-- Optional theme -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<!--        <script src="http://malsup.github.com/jquery.form.js"></script> -->
+        <style>
+            .row-item {
+                margin-bottom: 20px
+            }
+
+            .row {
+                text-align: center   
+            }
+
+            input[type=file] {
+                margin: auto;
+            }
+        </style>
     </head>
     <body>
         <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-md-2 col-md-offset-5">
-                    <div>Загрузите фотографию</div>
-                    <input id="upload-button" type="file" accept="image/*" data-show-preview="false" />
+            <div class="row row-item  row-centered">
+                <div class="col-xs-12 col-md-3 col-md-offset-5">
+                    <!--                    <h3>Оставить отзыв</h3>-->
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 col-md-2 col-md-offset-5"> 
-                    <div>
-                        <span>Сообщение</span>
-                    </div>
-                    <textarea rows="4"></textarea>
-                </div>
-            </div>
-            <div class="col-xs-12 col-md-2 col-md-offset-5">
-                <input type="button" value="Отправить" class="btn btn-danger" />
             </div>
         </div>
-        <script>
-            $(document).ready(function(){
-                //                $("#upload-button").fileinput({showCaption: false});
-            });
+        <div class="container">
+            <div class="row row-item  row-centered">
+                <div class="col-xs-12 col-md-3 col-md-offset-5">
+                    <!--                    <div><b>Ресторан McBurger</b></div>-->
+                    <!--                    <div>Садовническая набережная д.5</div>-->
+                </div>
+            </div>
+            <form id="formId"  enctype="text/plain" action="http://127.0.0.1:8090/spity/post?type=FeedbackObject" name="formName" method="POST">
+                <div class="row row-item">
+                    <div class="col-xs-12 col-md-3 col-md-offset-5">
+                        <div><span class="glyphicon glyphicon-star" aria-hidden="true"></span>Загрузите фотографию</div>
+                        <input id="upload-button" type="file" name="image" accept="image/*" data-show-preview="false" />
+                    </div>
+                </div>
+                <div class="row row-item">
+                    <div class="col-xs-12 col-md-3 col-md-offset-5">
+                        <div>
+                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span> <span>Сообщение</span>
+                        </div>
+                        <textarea name='text' id="message" rows="4"></textarea>
+                    </div>
+                </div>
+                <div class="row row-item">
+                    <div class="col-xs-12 col-md-3 col-md-offset-5">
+                        <input type="button" value="Отправить" onclick="sendFeedback();" class="btn btn-danger" />
+                    </div>
+                </div>
+            </form>
 
-        </script>
+            <script> 
+                
+                var myData2;
+                function previewFile() {
+                    var file    = document.querySelector('input[type=file]').files[0];
+                    var reader  = new FileReader();
+                    var myData;
+
+                    reader.onloadend = function () {
+                        myData = reader.result;
+                        //                                myData2 = reader.result;
+                    }
+
+                    if (file) {
+                        reader.readAsDataURL(file);
+                    } 
+                };
+
+                function sendFeedback()
+                {
+                    var result ={};
+                    result.Text = $('#message').val();
+                    updateArray($('#upload-button'))
+                        .then(function(data){
+                        result.Image =  myData2;
+                    })
+                        .then(function(data){
+                        $.support.cors = true;
+                        $.ajax({
+                            url:"http://localhost:8090/spity/postoneway?type=FeedbackObject",
+                            type:"POST",
+                            dataType: "json",
+                            data: JSON.stringify(result),
+                            crossDomain: true,
+                            processData: false
+                        });
+                    });
+
+
+                }
+
+
+                function updateArray(input)
+                {
+                    var promises = [];
+                    var images = [];
+                    var reader = new FileReader(),
+                        d = new $.Deferred();
+
+                    // Make sure we "capture" the correct 'd'
+                    (function(d){
+                        reader.onload = function (evt)
+                        {
+                            images.push(evt.target.result);
+                            myData2 = evt.target.result;
+                            d.resolve();
+                        }
+                    }(d));
+                    reader.readAsDataURL(input[0].files[0]);
+
+                    return d.promise();
+                }
+
+            </script> 
+
+        </div>
     </body>
 </html>

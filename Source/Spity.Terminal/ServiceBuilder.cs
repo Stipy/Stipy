@@ -1,13 +1,13 @@
 ﻿using System;
+using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Text;
 using Nelibur.ServiceModel.Services;
 using Nelibur.ServiceModel.Services.Operations;
-using Ninject;
+using Nelibur.Sword.Extensions;
 using NLog;
 using Spity.Contracts;
-using Spity.Terminal.Dependencies;
 using Spity.Terminal.Properties;
 using Spity.Terminal.ServiceProviders;
 using Spity.Terminal.ServiceProviders.Commands;
@@ -20,14 +20,6 @@ namespace Spity.Terminal
         private bool disposed;
         private CorsEnabledServiceHost<ServiceProvider> serviceProvider;
 
-        public void BuildApplication()
-        {
-            logger.Debug("Starting...");
-            RegisterService();
-            OpenCommunicationServices();
-            logger.Info("Spity is running. Press <Esc> or <Enter> to stop.");
-        }
-
         public void Dispose()
         {
             if (disposed)
@@ -37,6 +29,14 @@ namespace Spity.Terminal
 
             serviceProvider.Close();
             disposed = true;
+        }
+
+        public void BuildApplication()
+        {
+            logger.Debug("Starting...");
+            RegisterService();
+            OpenCommunicationServices();
+            logger.Info("Spity is running. Press <Esc> or <Enter> to stop.");
         }
 
         private static string ServiceHostToString(ServiceHost host)
@@ -67,6 +67,7 @@ namespace Spity.Terminal
         private void OpenCommunicationServices()
         {
             serviceProvider = new CorsEnabledServiceHost<ServiceProvider>(Settings.Default.ServiceAddress);
+            serviceProvider.Description.Endpoints.Select(x=>x.Binding as WebHttpBinding).Iter(x=>x.MaxReceivedMessageSize = 2000000000);
             serviceProvider.Faulted += ServiceProviderFaulted;
             serviceProvider.Open();
             logger.Info("{0} has been started", ServiceHostToString(serviceProvider));
