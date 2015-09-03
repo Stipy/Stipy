@@ -11,6 +11,7 @@ using Spity.Contracts;
 using Spity.Terminal.Properties;
 using Spity.Terminal.ServiceProviders;
 using Spity.Terminal.ServiceProviders.Commands;
+using Spity.Terminal.ServiceProviders.Queries;
 
 namespace Spity.Terminal
 {
@@ -75,7 +76,11 @@ namespace Spity.Terminal
 
         private void RegisterService()
         {
-            NeliburRestService.Configure(x => { Bind<FeedbackObject, SaveFeedbackCommand>(x); });
+            NeliburRestService.Configure(x =>
+            {
+                Bind<FeedbackObject, SaveFeedbackCommand>(x);
+                Bind<GetFeedbacksRequestObject, GetFeedbacksQuery>(x);
+            });
         }
     }
 }

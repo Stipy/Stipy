@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using NLog;
@@ -33,5 +34,6 @@ namespace Spity.Terminal.Repositories
         {
             return _connectionFactory.OpenConnection();
         }
+
     }
 }

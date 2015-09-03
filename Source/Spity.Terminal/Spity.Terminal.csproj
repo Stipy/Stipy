@@ -100,6 +100,7 @@
     <Compile Include="ServiceProviders\Cors\PreflightOperationBehavior.cs" />
     <Compile Include="ServiceProviders\Cors\PreflightOperationInvoker.cs" />
     <Compile Include="ServiceProviders\IServiceProvider.cs" />
+    <Compile Include="ServiceProviders\Queries\GetFeedbacksQuery.cs" />
     <Compile Include="ServiceProviders\ServiceProvider.cs" />
   </ItemGroup>
   <ItemGroup>
