@@ -78,7 +78,7 @@ namespace Spity.Terminal
         {
             NeliburRestService.Configure(x =>
             {
-                Bind<FeedbackObject, SaveFeedbackCommand>(x);
+                Bind<FeedbackRequestObject, SaveFeedbackCommand>(x);
                 Bind<GetFeedbacksRequestObject, GetFeedbacksQuery>(x);
             });
         }

@@ -100,9 +100,9 @@ namespace Spity.Terminal.ServiceProviders
             {
                 throw new WebFaultException(HttpStatusCode.BadRequest);
             }
-            if (IsSuppoertedRequest<FeedbackObject>(request.Value))
+            if (IsSuppoertedRequest<FeedbackRequestObject>(request.Value))
             {
-                ProcessRequest<FeedbackObject, SaveFeedbackCommand>(requestData);
+                ProcessRequest<FeedbackRequestObject, SaveFeedbackCommand>(requestData);
             }
         }
 

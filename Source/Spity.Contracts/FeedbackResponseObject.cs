@@ -1,10 +1,9 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace Spity.Contracts
 {
     [DataContract]
-    public sealed class FeedbackObject
+    public sealed class FeedbackResponseObject
     {
         [DataMember]
         public string Image { get; set; }

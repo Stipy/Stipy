@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using Nelibur.Sword.Extensions;
 using NLog;
+using Spity.Contracts;
 using Spity.Terminal.Repositories.Entities;
 
 namespace Spity.Terminal.Repositories
@@ -18,9 +21,22 @@ namespace Spity.Terminal.Repositories
             _connectionFactory = connectionFactory;
         }
 
+        public List<FeedbackResponseObject> GetAll()
+        {
+            return OpenConnection()
+                .GetCollection<FeedbackEntity>(FeedbackName)
+                .Find("{}")
+                .ToListAsync()
+                .Result
+                .OrderBy(x => x.CreateTime)
+                .ConvertAll(Convert);
+        }
+
         public void Save(FeedbackEntity entity)
         {
             entity.Id = ObjectId.GenerateNewId();
+            entity.CreateTime = DateTime.Now;
+
             _logger.Debug("-> Save {0}", entity.Id);
 
             OpenConnection()
@@ -30,10 +46,18 @@ namespace Spity.Terminal.Repositories
             _logger.Debug("<- Save {0}", entity.Id);
         }
 
+        private FeedbackResponseObject Convert(FeedbackEntity entity)
+        {
+            return new FeedbackResponseObject
+            {
+                Image = entity.Image,
+                Text = entity.Text
+            };
+        }
+
         private IMongoDatabase OpenConnection()
         {
             return _connectionFactory.OpenConnection();
         }
-
     }
 }

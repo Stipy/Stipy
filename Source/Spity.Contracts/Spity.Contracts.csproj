@@ -40,7 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FeedbackObject.cs" />
+    <Compile Include="FeedbackRequestObject.cs" />
+    <Compile Include="FeedbackResponseObject.cs" />
     <Compile Include="GetFeedbacksRequestObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

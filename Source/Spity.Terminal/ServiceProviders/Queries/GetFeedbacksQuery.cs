@@ -6,7 +6,7 @@ namespace Spity.Terminal.ServiceProviders.Queries
 {
     public sealed class GetFeedbacksQuery : IGet<GetFeedbacksQuery>
     {
-        private FeedbackRepository _repository;
+        private readonly FeedbackRepository _repository;
 
         public GetFeedbacksQuery(FeedbackRepository repository)
         {
@@ -15,7 +15,7 @@ namespace Spity.Terminal.ServiceProviders.Queries
 
         public object Get(GetFeedbacksQuery request)
         {
-            throw new NotImplementedException();
+            return _repository.GetAll();
         }
     }
 }

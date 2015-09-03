@@ -7,7 +7,7 @@ using Spity.Terminal.Repositories.Entities;
 
 namespace Spity.Terminal.ServiceProviders.Commands
 {
-    public sealed class SaveFeedbackCommand : IPostOneWay<FeedbackObject>
+    public sealed class SaveFeedbackCommand : IPostOneWay<FeedbackRequestObject>
     {
         private const int TextMaxLength = 500;
         private readonly FeedbackRepository _repository;
@@ -17,7 +17,7 @@ namespace Spity.Terminal.ServiceProviders.Commands
             _repository = repository;
         }
 
-        public void PostOneWay(FeedbackObject request)
+        public void PostOneWay(FeedbackRequestObject request)
         {
             request.ToOption()
                    .Where(Validate)
@@ -26,7 +26,7 @@ namespace Spity.Terminal.ServiceProviders.Commands
                    .ThrowOnEmpty<ArgumentException>();
         }
 
-        private FeedbackEntity Convert(FeedbackObject request)
+        private FeedbackEntity Convert(FeedbackRequestObject request)
         {
             var result = new FeedbackEntity
             {
@@ -37,13 +37,12 @@ namespace Spity.Terminal.ServiceProviders.Commands
                 return result;
             }
             string searchString = "base64,";
-            var endIndex = request.Image.IndexOf(searchString, 0, StringComparison.OrdinalIgnoreCase);
-            var image = request.Image.Remove(0, endIndex + searchString.Length);
-            result.Image = System.Convert.FromBase64String(image);
+            int endIndex = request.Image.IndexOf(searchString, 0, StringComparison.OrdinalIgnoreCase);
+            result.Image = request.Image.Remove(0, endIndex + searchString.Length);
             return result;
         }
 
-        private bool Validate(FeedbackObject request)
+        private bool Validate(FeedbackRequestObject request)
         {
             if (request.IsNull())
             {
