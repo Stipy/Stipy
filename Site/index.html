@@ -40,7 +40,7 @@
                     <!--                    <div>Садовническая набережная д.5</div>-->
                 </div>
             </div>
-            <form id="formId"  enctype="text/plain" action="http://127.0.0.1:8090/spity/post?type=FeedbackRequestObject" name="formName" method="POST">
+            <form id="formId"  enctype="text/plain" name="formName" method="POST">
                 <div class="row row-item">
                     <div class="col-xs-12 col-md-3 col-md-offset-5">
 <!--                        <div><span class="glyphicon glyphicon-star" aria-hidden="true"></span>Upload your photo</div>-->
@@ -93,7 +93,7 @@
                         .then(function(data){
                         $.support.cors = true;
                         $.ajax({
-                            url:"http://localhost:8090/spity/postoneway?type=FeedbackRequestObject",
+                            url:"http://54.245.80.130:80/spity/postoneway?type=FeedbackRequestObject",
                             type:"POST",
                             dataType: "json",
                             data: JSON.stringify(result),
