@@ -1,10 +1,11 @@
 ﻿using System;
 using Nelibur.ServiceModel.Services.Operations;
+using Spity.Contracts;
 using Spity.Terminal.Repositories;
 
 namespace Spity.Terminal.ServiceProviders.Queries
 {
-    public sealed class GetFeedbacksQuery : IGet<GetFeedbacksQuery>
+    public sealed class GetFeedbacksQuery : IGet<GetFeedbacksRequestObject>
     {
         private readonly FeedbackRepository _repository;
 
@@ -13,7 +14,7 @@ namespace Spity.Terminal.ServiceProviders.Queries
             _repository = repository;
         }
 
-        public object Get(GetFeedbacksQuery request)
+        public object Get(GetFeedbacksRequestObject request)
         {
             return _repository.GetAll();
         }
