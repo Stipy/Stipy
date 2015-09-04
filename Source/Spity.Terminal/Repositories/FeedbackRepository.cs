@@ -28,7 +28,7 @@ namespace Spity.Terminal.Repositories
                 .Find("{}")
                 .ToListAsync()
                 .Result
-                .OrderBy(x => x.CreateTime)
+                .OrderByDescending(x => x.CreateTime)
                 .ConvertAll(Convert);
         }
 
