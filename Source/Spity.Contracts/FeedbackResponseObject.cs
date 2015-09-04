@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace Spity.Contracts
 {
@@ -10,5 +11,8 @@ namespace Spity.Contracts
 
         [DataMember]
         public string Text { get; set; }
+
+        [DataMember]
+        public DateTime CreateTime { get; set; }
     }
 }

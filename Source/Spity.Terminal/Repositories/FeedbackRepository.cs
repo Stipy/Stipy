@@ -51,7 +51,8 @@ namespace Spity.Terminal.Repositories
             return new FeedbackResponseObject
             {
                 Image = entity.Image,
-                Text = entity.Text
+                Text = entity.Text,
+                CreateTime = entity.CreateTime
             };
         }
 

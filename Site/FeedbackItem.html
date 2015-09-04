@@ -3,5 +3,10 @@
     <img style="display: inline-block; max-height: 200px; max-width: 200px"  data-ng-src="data:image/png;base64,{{feedback.Image}}" />
 </td>
 <td>
-    <span>{{feedback.Text}}</span>
+    <span>{{ feedback.Text }}</span>
 </td>
+<!--
+<td>
+    <span>{{ feedback.CreateTime | aspNetDateTime | date: 'HH:mm:ss dd.MM.yyyy' }}</span>
+</td>
+-->

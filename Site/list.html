@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en" ng-app="FeedbackApp">
+
     <head>
         <meta charset="utf-8">
         <title>My HTML File</title>
@@ -10,18 +11,32 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc= sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
         <script src="app.js"></script>
+        <script src="variables.js"></script>
     </head>
-    <body ng-controller="FeedbackListContoller" style="font-family: 'Pt Sans'">
-        <h1>Feedback List</h1>
-        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-            <table class="table table-striped ">
-                <tr>
-                    <th>Nr.</th>
-                    <th>Image</th>
-                    <th>Text</th>
-                </tr>
-                <tr feedback-item ng-repeat="feedback in FeedbackList"></tr>
-            </table>
+
+    <body ng-controller="FeedbackListContoller" style="font-family: 'Pt Sans';">
+        <div class="container well well-lg vertical-center-row">
+            <h1 class="text-center">Feedback List</h1>
+            <div style="margin: 30px 0px 30px" class="text-center">
+                <a class="btn btn-default" href="index.html" style="padding:5px 70px" role="button">Feedback form</a>
+            </div>
+            <div>
+                <table class="table table-striped">
+                    <tr>
+                        <th>Nr.</th>
+                        <th>Image</th>
+                        <th>Text</th>
+<!--                        <th>CreateTime</th>-->
+                    </tr>
+                    <tr feedback-item ng-repeat="feedback in FeedbackList"></tr>
+                </table>
+            </div>
+            <footer class="text-center">
+                <span class="glyphicon glyphicon-time"></span> 
+                <span>{{ CurrentDate | date:'HH:mm:ss dd.MM.yyyy'}}</span>
+            </footer>
         </div>
+
     </body>
+
 </html>
