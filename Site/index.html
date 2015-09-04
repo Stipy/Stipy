@@ -1,140 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
-        <!-- Optional theme -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-        <!-- Latest compiled and minified JavaScript -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        <script src="variables.js"></script>
-        <style>
-            .row-item {
-                margin-bottom: 20px
-            }
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="variables.js"></script>
+    <style>
+        .row-item {
+            margin-bottom: 20px
+        }
+        
+        .row {
+            text-align: center
+        }
+        
+        input[type=file] {
+            margin: auto;
+        }
+    </style>
+</head>
 
-            .row {
-                text-align: center
-            }
+<body>
+    <div class="container">
 
-            input[type=file] {
-                margin: auto;
-            }
-        </style>
-    </head>
-
-    <body>
-        <div class="container">
-
-            <div class="row row-item  row-centered">
-                <div class="col-xs-6 col-md-3 col-md-offset-5">
-                    <!--                    <h3>Оставить отзыв</h3>-->
-                </div>
+        <div class="row row-item  row-centered">
+            <div class="col-xs-6 col-md-3 col-md-offset-5">
+                <!--                    <h3>Оставить отзыв</h3>-->
             </div>
         </div>
-        <div class="container">
-            <div class="row row-item  row-centered">
-                <div class="col-xs-6 col-md-3 col-md-offset-2">
-                    <!--                    <div><b>Ресторан McBurger</b></div>-->
-                    <!--                    <div>Садовническая набережная д.5</div>-->
+    </div>
+    <div class="container">
+        <div class="row row-item  row-centered">
+            <div class="col-xs-6 col-md-3 col-md-offset-2">
+                <!--                    <div><b>Ресторан McBurger</b></div>-->
+                <!--                    <div>Садовническая набережная д.5</div>-->
+            </div>
+        </div>
+        <form id="formId" enctype="text/plain" name="formName" method="POST">
+            <div class="row row-item">
+                <div class="col-xs-12 col-md-3 col-md-offset-5">
+                    <!--                        <div><span class="glyphicon glyphicon-star" aria-hidden="true"></span>Upload your photo</div>-->
+                    <input id="upload-button" type="file" name="image" accept="image/*" data-show-preview="false" />
                 </div>
             </div>
-            <form id="formId" enctype="text/plain" name="formName" method="POST">
-                <div class="row row-item">
-                    <div class="col-xs-12 col-md-3 col-md-offset-5">
-                        <!--                        <div><span class="glyphicon glyphicon-star" aria-hidden="true"></span>Upload your photo</div>-->
-                        <input id="upload-button" type="file" name="image" accept="image/*" data-show-preview="false" />
+            <div class="row row-item">
+                <div class="col-xs-12 col-md-3 col-md-offset-5">
+                    <div>
+                        <!--                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>-->
+                        <span>Please enter your comments</span>
+
                     </div>
+                    <br/>
+                    <textarea name='text' id="message" rows="8" style="width:400px"></textarea>
                 </div>
-                <div class="row row-item">
-                    <div class="col-xs-12 col-md-3 col-md-offset-5">
-                        <div>
-                            <!--                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>-->
-                            <span>Please enter your comments</span>
-
-                        </div>
-                        <br/>
-                        <textarea name='text' id="message" rows="8" style="width:400px"></textarea>
-                    </div>
+            </div>
+            <div class="row row-item">
+                <div class="col-xs-6 col-md-1 col-md-offset-5">
+                    <input type="button" value="Send" onclick="sendFeedback();" class="btn btn-danger" />
                 </div>
-                <div class="row row-item">
-                    <div class="col-xs-6 col-md-1 col-md-offset-5">
-                        <input type="button" value="Send" onclick="sendFeedback();" class="btn btn-danger" />
-                    </div>
-                    <div class="col-xs-6 col-md-1">
-                        <a class="btn btn-default" href="list.html" style="padding:5px 70px" role="button">Get feedback</a>
-                    </div>
+                <div class="col-xs-6 col-md-1">
+                    <a class="btn btn-default" href="list.html" style="padding:5px 70px" role="button">Get feedback</a>
                 </div>
-            </form>
-            <script>
-                var myData2;
+            </div>
+        </form>
+        <script>
+            var myData2;
 
-                function previewFile() {
-                    var file = document.querySelector('input[type=file]').files[0];
-                    var reader = new FileReader();
-                    var myData;
+            function previewFile() {
+                var file = document.querySelector('input[type=file]').files[0];
+                var reader = new FileReader();
+                var myData;
 
-                    reader.onloadend = function () {
-                        myData = reader.result;
-                        //                                myData2 = reader.result;
-                    }
+                reader.onloadend = function () {
+                    myData = reader.result;
+                    //                                myData2 = reader.result;
+                }
 
-                    if (file) {
-                        reader.readAsDataURL(file);
-                    }
-                };
+                if (file) {
+                    reader.readAsDataURL(file);
+                }
+            };
 
-                //"http://localhost:8090/spity/postoneway?type=FeedbackRequestObject"
-                function sendFeedback() {
-                    var result = {};
-                    result.Text = $('#message').val();
-                    updateArray($('#upload-button'))
-                        .then(function (data) {
+            //"http://localhost:8090/spity/postoneway?type=FeedbackRequestObject"
+            function sendFeedback() {
+                var result = {};
+                result.Text = $('#message').val();
+                updateArray($('#upload-button'))
+                    .then(function (data) {
                         result.Image = myData2;
                     })
-                        .then(function (data) {
+                    .then(function (data) {
                         $.support.cors = true;
                         $.ajax({
                             url: ipAddress + "/postoneway?type=FeedbackRequestObject",
                             type: "POST",
-                            dataType: "json",
                             data: JSON.stringify(result),
                             crossDomain: true,
-                            processData: false
+                            processData: false,
+                            success: function (data) {
+                                $('#message').val("");
+                                $('#upload-button').val("");
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                alert('You go home yankee: ' + textStatus);
+                            }
+
                         });
-                    })
-                        .done(function () {
-                        $('#message').val("");
-                        $('#upload-button').val("");
+
                     });
-                }
+            }
 
 
-                function updateArray(input) {
-                    var promises = [];
-                    var images = [];
-                    var reader = new FileReader(),
-                        d = new $.Deferred();
+            function updateArray(input) {
+                var promises = [];
+                var images = [];
+                var reader = new FileReader(),
+                    d = new $.Deferred();
 
-                    // Make sure we "capture" the correct 'd'
-                    (function (d) {
-                        reader.onload = function (evt) {
-                            images.push(evt.target.result);
-                            myData2 = evt.target.result;
-                            d.resolve();
-                        }
-                    }(d));
-                    reader.readAsDataURL(input[0].files[0]);
+                // Make sure we "capture" the correct 'd'
+                (function (d) {
+                    reader.onload = function (evt) {
+                        images.push(evt.target.result);
+                        myData2 = evt.target.result;
+                        d.resolve();
+                    }
+                }(d));
+                reader.readAsDataURL(input[0].files[0]);
 
-                    return d.promise();
-                }
-            </script>
+                return d.promise();
+            }
+        </script>
 
-        </div>
-    </body>
+    </div>
+</body>
 
 </html>

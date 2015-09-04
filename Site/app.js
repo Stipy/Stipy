@@ -6,15 +6,11 @@ var app = angular.module('FeedbackApp', []);
 app.controller('FeedbackListContoller', function ($scope, $http) {
     $http.get(ipAddress + '/Get?type=GetFeedbacksRequestObject')
         .success(function (data) {
-            $scope.FeedbackList = data;
-            var i;
-            for (i = 0; i < $scope.FeedbackList.length; i++) {
-                $scope.FeedbackList[i].Number = i;
-            }
+            $scope.FeedbackList = getNumberedList(data);
+
         });
     $scope.CurrentDate = new Date();
 });
-
 
 app.directive("feedbackItem", function ($compile) {
     return {
@@ -30,3 +26,11 @@ app.filter("aspNetDateTime", function () {
         return "";
     }
 });
+
+function getNumberedList(data) {
+    var i;
+    for (i = 0; i < data.length; i++) {
+        data[i].Number = i;
+    }
+    return data;
+}
